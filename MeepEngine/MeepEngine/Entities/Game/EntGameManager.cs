@@ -190,7 +190,7 @@ namespace MeepEngine
             score = 0;
             sunLocation = Main.rand.Next(4);
 
-            if (!EntSetup.freePlay && Main.activeRoom != Main.rmCalibrate)
+            if (/*!EntSetup.freePlay &&*/ Main.activeRoom != Main.rmCalibrate)
             {
                 // Data output
                 path = EntSetup.dataDirectory + EntSetup.SpecificSubjectPath();
@@ -287,19 +287,19 @@ namespace MeepEngine
 
         public void WriteData(float timeCatch, float timeThrow, bool successCatch, bool successThrow, bool successSun)
         {
-            if (!EntSetup.freePlay && Main.activeRoom != Main.rmCalibrate)
+            if (/*!EntSetup.freePlay &&*/ Main.activeRoom != Main.rmCalibrate)
                 dataOutput.WriteLine(currentAsteroid.ToString() + "," + timeCatch.ToString() + "," + timeThrow.ToString() + "," + (successCatch ? 1 : 0).ToString() + "," + (successThrow ? 1 : 0).ToString() + "," + (successSun ? 1 : 0).ToString());
         }
 
         public void FinishWritingData()
         {
-            if (!EntSetup.freePlay && Main.activeRoom != Main.rmCalibrate)
+            if (/*!EntSetup.freePlay &&*/ Main.activeRoom != Main.rmCalibrate)
                 dataOutput.Close();
         }
 
         public void WriteSummary()
         {
-            if (!EntSetup.freePlay && Main.activeRoom != Main.rmCalibrate)
+            if (/*!EntSetup.freePlay &&*/ Main.activeRoom != Main.rmCalibrate)
             {
                 float successRate = (float)successfulAsteroids / (float)currentAsteroid;
                 float rangePercent = EntScaledKinect.CalculateRangeArea() / ((float)Main.roomWidth * (float)Main.roomHeight);
