@@ -199,7 +199,7 @@ namespace MeepEngine
                 path += EntSetup.SpecificSubjectFile();
                 dataOutput = new StreamWriter(path);
 
-                try { dataOutput.WriteLine("Asteroid,Catch Time,Throw Time,Caught,Thrown,Into Sun"); }
+                try { dataOutput.WriteLine("Trial #,Catch Time,Throw Time,Caught,Thrown,Hit Target"); }
                 catch { Main.RoomGoto(Main.rmMenu); }
 
                 // Summary output
