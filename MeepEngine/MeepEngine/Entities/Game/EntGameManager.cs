@@ -52,6 +52,7 @@ namespace MeepEngine
 
         // Score
         public static int score;
+        private static int prevScore = 0;
 
         // Output
         public StreamWriter dataOutput;
@@ -89,6 +90,7 @@ namespace MeepEngine
                 // Keep asteroids coming, choose new sun location
                 if (currentAsteroid < totalAsteroids || Main.activeRoom == Main.rmCalibrate)
                 {
+                    // if there is not a current asteroid
                     if (!Main.InstanceExists(typeof(EntAsteroid)))
                     {
                         if (delayTimer < delay[EntSetup.difficulty])
@@ -97,6 +99,8 @@ namespace MeepEngine
                         }
                         else
                         {
+                            prevScore = score;
+                            
                             currentAsteroid++;
                             Main.InstanceCreate(new EntAsteroid(game, spriteBatch), Vector2.Zero);
 
@@ -120,7 +124,7 @@ namespace MeepEngine
                         Main.RoomGoto(Main.rmGameOver);
                     }
                 }
-            }
+            } // end if no asteroid 
 
             #endregion
 
@@ -199,7 +203,7 @@ namespace MeepEngine
                 path += EntSetup.SpecificSubjectFile();
                 dataOutput = new StreamWriter(path);
 
-                try { dataOutput.WriteLine("Trial #,Catch Time,Throw Time,Caught,Thrown,Hit Target"); }
+                try { dataOutput.WriteLine("Trial #,Catch Time,Throw Time,Caught,Thrown,Hit Target,Score/Trial"); }
                 catch { Main.RoomGoto(Main.rmMenu); }
 
                 // Summary output
@@ -288,7 +292,10 @@ namespace MeepEngine
         public void WriteData(float timeCatch, float timeThrow, bool successCatch, bool successThrow, bool successSun)
         {
             if (/*!EntSetup.freePlay &&*/ Main.activeRoom != Main.rmCalibrate)
-                dataOutput.WriteLine(currentAsteroid.ToString() + "," + timeCatch.ToString() + "," + timeThrow.ToString() + "," + (successCatch ? 1 : 0).ToString() + "," + (successThrow ? 1 : 0).ToString() + "," + (successSun ? 1 : 0).ToString());
+                dataOutput.WriteLine(currentAsteroid.ToString() + "," + timeCatch.ToString() 
+                    + "," + timeThrow.ToString() + "," + (successCatch ? 1 : 0).ToString() + "," 
+                    + (successThrow ? 1 : 0).ToString() + "," + (successSun ? 1 : 0).ToString()
+                    + "," + (score - prevScore).ToString());
         }
 
         public void FinishWritingData()
